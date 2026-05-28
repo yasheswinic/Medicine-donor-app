@@ -1,239 +1,496 @@
-# MedDonate — Medicine Donation & NGO Matching
+# 💊 MedDonate — Medicine Donation & NGO Matching Platform
 
-**100% free demo** — Streamlit + SQLite + fuzzy matching. No paid map, OCR, or auth APIs. No email/SMS.
+A free and open-source medicine donation platform that connects donors with nearby NGOs using OCR label scanning, fuzzy matching, live maps, and admin analytics.
 
-Connect medicine donors with nearby NGOs using validation, in-app notifications, OCR label scanning, and live maps powered by OpenStreetMap.
-
----
-
-## Features
-
-### Public site (donors & NGOs)
-
-| Area                 | What it does                                                                |
-| -------------------- | --------------------------------------------------------------------------- |
-| **Home**             | Quick links to donate, NGO register, dashboard, label scan, map             |
-| **Donate Medicines** | 4-step flow: profile → medicine → pickup → review & submit                  |
-| **Scan & Tools**     | OCR label reader (RapidOCR) + medicine safety checker (blocked substances)  |
-| **NGO Portal**       | Register NGO, view incoming donations, accept / schedule / reject           |
-| **Dashboard**        | Match cards, KPIs, charts, CSV export, map & analytics tabs                 |
-| **Map**              | **India overview** (donors/NGOs by city) + **Live nearby** (GPS or pincode) |
-| **Notifications**    | In-app inbox per email (no SMTP)                                            |
-| **Help & FAQ**       | Usage notes for OCR, maps, admin, receipts                                  |
-
-### Donation flow extras
-
-- Fuzzy NGO matching (`thefuzz`) by city, locality, medicine, category
-- Optional medicine photo upload (local `app/uploads/`)
-- **OCR auto-fill** from strip/box photos (name, strength, batch, dates, Schedule H)
-- **Structured JSON** OCR report + download
-- **Tracking ID**, **QR code**, **text receipt** download
-- Duplicate-donation warning (same medicine within 7 days)
-- Common medicine picker + expiry validation from manufacturing date
-
-### Map & location (free)
-
-- **Live GPS** via browser geolocation
-- **Pincode lookup** via OpenStreetMap Nominatim
-- **Real nearby shops** — pharmacies, hospitals, clinics from Overpass API
-- **Nearby app data** — donations & NGOs in radius with distance (km)
-- India city overview map (Folium + OSM tiles)
-
-### Admin portal (staff only)
-
-Separate from the public app — no shared sidebar with donors/NGOs.
-
-- First-run admin account creation (bcrypt in SQLite)
-- Demo login from `.env`: `admin` / `admin123`
-- Metrics, donor/NGO/match tables, CSV export, status pipeline
+Built entirely with free technologies using Streamlit + SQLite.
 
 ---
 
-## Tech stack (all free)
+# 📌 Overview
 
-| Layer                  | Technology                                   |
-| ---------------------- | -------------------------------------------- |
-| UI                     | Streamlit                                    |
-| Database               | SQLite (`data.db`)                           |
-| Validation             | Pydantic v2                                  |
-| Matching               | thefuzz + python-Levenshtein                 |
-| Auth (admin)           | bcrypt                                       |
-| Maps                   | Folium, streamlit-folium, OpenStreetMap      |
-| Geocoding / nearby POI | Nominatim + Overpass API                     |
-| OCR                    | RapidOCR (on-device, `rapidocr-onnxruntime`) |
-| QR receipts            | qrcode + Pillow                              |
-| Charts                 | Plotly, matplotlib, pandas                   |
+MedDonate helps reduce medicine wastage by enabling users to donate unused medicines to NGOs and healthcare organizations.
+
+The platform includes:
+- Medicine donation workflow
+- NGO management portal
+- OCR medicine label scanning
+- Nearby NGO & pharmacy discovery
+- Donation tracking
+- Admin dashboard & analytics
+- In-app notifications
+- QR-based receipts
 
 ---
+
+# ✨ Features
+
+## 🏠 Public Portal
+
+### Home
+- Central navigation hub
+- Quick access to all modules
+- Clean and responsive UI
+
+### Donate Medicines
+4-step donation workflow:
+1. Donor Details
+2. Medicine Information
+3. Pickup Information
+4. Review & Submit
+
+Includes:
+- Expiry validation
+- Duplicate donation detection
+- Medicine category selection
+- Tracking ID generation
+- QR receipt generation
+
+---
+
+## 🔍 OCR Label Scanner
+
+Upload medicine strip/box images to:
+- Extract medicine name
+- Detect strength/dosage
+- Detect batch number
+- Detect expiry/manufacturing dates
+- Identify Schedule H medicines
+- Auto-fill donation forms
+
+### OCR Stack
+- RapidOCR
+- ONNX Runtime
+- OpenCV
+
+---
+
+## 🗺️ Maps & Nearby Discovery
+
+### Features
+- India overview map
+- Live nearby mode
+- Browser GPS support
+- Pincode geolocation
+- Nearby pharmacies & clinics
+- Nearby NGOs and donors
+
+### Powered By
+- OpenStreetMap
+- Folium
+- Nominatim API
+- Overpass API
+
+---
+
+## 🏢 NGO Portal
+
+NGOs can:
+- Register organization
+- View incoming donations
+- Accept/reject donations
+- Schedule pickups
+- Manage donation pipeline
+
+---
+
+## 📊 Dashboard & Analytics
+
+Includes:
+- Donation KPIs
+- NGO statistics
+- Match analytics
+- Charts & graphs
+- CSV export
+- Location analytics
+
+Libraries:
+- Plotly
+- matplotlib
+- pandas
+
+---
+
+## 🔔 Notifications
+
+In-app notification system:
+- No email/SMS dependency
+- Inbox-based notifications
+- Donation status updates
+- NGO communication alerts
+
+---
+
+## 🔐 Admin Portal
+
+Separate admin interface with:
+- Secure login
+- bcrypt password hashing
+- Metrics dashboard
+- CSV exports
+- Donation management
+- NGO management
+- Match pipeline tracking
+
+---
+
+# 🧠 Core Functionalities
+
+## Fuzzy NGO Matching
+
+Uses:
+- `thefuzz`
+- `python-Levenshtein`
+
+Matching factors:
+- City
+- Locality
+- Medicine category
+- Donation relevance
+
+---
+
+## Medicine Safety Checker
+
+Blocks unsafe/illegal medicines such as:
+- Heroin
+- Thalidomide
+- Restricted substances
+
+> Demo safety validation only — not medical advice.
+
+---
+
+## Donation Status Pipeline
+
+```text
+available
+   ↓
+pending
+   ↓
+claimed
+   ↓
+picked_up
+   ↓
+completed
+```
+
+Expired donations are automatically flagged.
+
+---
+
+# 🏗️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Streamlit |
+| Database | SQLite |
+| Validation | Pydantic v2 |
+| OCR | RapidOCR |
+| Matching | thefuzz + Levenshtein |
+| Maps | Folium + OpenStreetMap |
+| Authentication | bcrypt |
+| Charts | Plotly + matplotlib |
+| QR Generation | qrcode + Pillow |
+| Testing | pytest |
+
+---
+
+# 📂 Project Structure
+
+```text
+med-donation-app/
+├── app/
+│   ├── main.py
+│   ├── admin_main.py
+│   ├── config.py
+│   ├── db.py
+│   ├── models.py
+│   ├── constants.py
+│   ├── utils.py
+│   ├── ui.py
+│   ├── ui_ocr.py
+│   ├── assets/
+│   ├── components/
+│   ├── views/
+│   ├── services/
+│   ├── repositories/
+│   └── uploads/
+├── tests/
+├── logs/
+├── requirements.txt
+├── .env.example
+└── .streamlit/
+```
+
+---
+
+# ⚙️ Installation
 
 ## Requirements
 
-- Python **3.10+** (tested on 3.13; use `rapidocr-onnxruntime>=1.2.3,<1.3` on 3.13)
-- Internet for first OCR model download (~10MB) and live map geocoding
+- Python 3.10+
+- Internet connection (for OCR model download & live maps)
 
 ---
 
-## Quick start
+## Setup
 
 ```bash
+git clone <repository-url>
+
 cd med-donation-app
+
 python -m venv venv
-venv\Scripts\activate          # Windows
-# source venv/bin/activate     # macOS / Linux
+```
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### macOS/Linux
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
-copy .env.example .env         # Windows
-# cp .env.example .env         # macOS / Linux
+```
+
+Create environment file:
+
+### Windows
+
+```bash
+copy .env.example .env
+```
+
+### macOS/Linux
+
+```bash
+cp .env.example .env
+```
+
+Run application:
+
+```bash
 streamlit run app/main.py
 ```
 
-Open the URL shown (usually `http://localhost:8501`).
+---
 
-### First launch
-
-1. Choose **Public site** (donors & NGOs) or **Admin portal** (staff).
-2. Public users: use sidebar to navigate.
-3. Admin: sign in with `admin` / `admin123` (from `.env`) or create an account on first visit.
-
-### Optional: admin-only entry
+# 🚀 Running Admin Portal Only
 
 ```bash
 streamlit run app/admin_main.py
 ```
 
-Skips the portal chooser and opens admin directly.
-
 ---
 
-## Configuration (`.env`)
+# 🔧 Environment Variables
 
-| Variable         | Default       | Purpose                  |
-| ---------------- | ------------- | ------------------------ |
-| `DB_PATH`        | `./data.db`   | SQLite database file     |
-| `APP_ENV`        | `development` | Environment label        |
-| `ADMIN_USERNAME` | `admin`       | Bootstrap admin username |
-| `ADMIN_PASSWORD` | `admin123`    | Bootstrap admin password |
+## `.env`
 
-Change admin credentials before any public deployment.
+```env
+DB_PATH=./data.db
+APP_ENV=development
 
----
-
-## Project structure
-
-```text
-med-donation-app/
-├── app/
-│   ├── main.py              # Public + portal router
-│   ├── admin_main.py        # Admin-only entry
-│   ├── config.py            # Settings from .env
-│   ├── db.py                # Schema + migrations
-│   ├── models.py            # Pydantic models
-│   ├── constants.py         # Statuses, blocked medicines, etc.
-│   ├── utils.py             # Logging, safety, expiry helpers
-│   ├── ui.py                # Sidebars, nav, shared UI
-│   ├── ui_ocr.py            # OCR JSON display helper
-│   ├── assets/styles.css
-│   ├── components/
-│   │   └── geolocation.py   # Browser GPS component
-│   ├── views/
-│   │   ├── portal.py        # Public vs admin chooser
-│   │   ├── home.py
-│   │   ├── donor.py
-│   │   ├── ngo.py
-│   │   ├── dashboard.py
-│   │   ├── map_view.py      # Overview + live nearby
-│   │   ├── tools.py         # OCR + safety checker
-│   │   ├── notifications.py
-│   │   ├── help.py
-│   │   └── admin.py
-│   ├── services/
-│   │   ├── matching_service.py
-│   │   ├── validation_service.py
-│   │   ├── upload_service.py
-│   │   ├── search_service.py
-│   │   ├── map_service.py
-│   │   ├── location_service.py   # GPS, geocode, Overpass
-│   │   ├── ocr_service.py
-│   │   ├── receipt_service.py
-│   │   └── auth_service.py
-│   ├── repositories/
-│   │   ├── donor_repo.py
-│   │   ├── ngo_repo.py
-│   │   ├── match_repo.py
-│   │   └── notification_repo.py
-│   └── uploads/             # Local medicine photos
-├── tests/                   # pytest (33 tests)
-├── logs/                    # app.log (rotating)
-├── requirements.txt
-├── .env.example
-└── .streamlit/config.toml
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin123
 ```
 
----
-
-## Usage tips
-
-### OCR label scan
-
-1. Go to **Scan & Tools** or **Donate → Step 2 → Scan label**.
-2. Upload a clear photo of the medicine strip/box.
-3. Review **Structured OCR result (JSON)** and metrics.
-4. Use **Use in donation form** to copy fields.
-
-### Live nearby map
-
-1. Go to **Map → Live nearby**.
-2. Click **Use my live location** (allow browser permission) **or** enter a 6-digit pincode.
-3. Adjust **search radius**; view pharmacies/clinics (OSM) and app donors/NGOs.
-
-### Medicine safety checker
-
-**Scan & Tools → Safety checker** — blocks illegal/withdrawn substances (e.g. heroin, thalidomide). Not medical advice; demo list only.
-
-### Donation statuses
-
-`available` → `pending` → `claimed` → `picked_up` → `completed` (or `expired`)
+> Change admin credentials before deployment.
 
 ---
 
-## Tests
+# 🧪 Running Tests
 
 ```bash
 pytest -v
 ```
 
-Covers validation, matching, DB migration, OCR parsing, geolocation math, and utilities.
+Covers:
+- Validation testing
+- OCR parsing tests
+- Matching logic
+- DB migration tests
+- Utility tests
+- Geolocation calculations
 
 ---
 
-## Deploy free (Streamlit Cloud)
+# 🌐 Deployment
 
-1. Push the repo to GitHub.
-2. [share.streamlit.io](https://share.streamlit.io) → **New app**
-3. **Main file path:** `app/main.py`
-4. **Secrets** (optional): `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `DB_PATH`
+## Streamlit Cloud
 
-**Limits:** SQLite and `app/uploads/` reset on redeploy — suitable for demos, not production persistence.
+1. Push project to GitHub
+2. Open Streamlit Cloud
+3. Create new app
+4. Select:
+
+```text
+Main file path: app/main.py
+```
+
+Optional secrets:
+```text
+ADMIN_USERNAME
+ADMIN_PASSWORD
+DB_PATH
+```
 
 ---
 
-## Intentionally not included (demo scope)
+# ⚠️ Limitations
 
-- Email / SMS / push notifications
-- Paid APIs (Google Maps, cloud OCR, Stripe, etc.)
-- PostgreSQL / Redis / S3
-- Real-time GPS tracking of delivery vehicles (only point-in-time user location + static OSM POIs)
+This is a demo-focused project.
+
+Not included:
+- Email/SMS notifications
+- Payment gateway
+- Real-time vehicle tracking
+- Cloud storage
+- PostgreSQL
+- Production authentication
+- Enterprise scalability
 
 ---
 
-## Troubleshooting
+# 🔮 Future Scope
 
-| Issue                                   | Fix                                                                                          |
-| --------------------------------------- | -------------------------------------------------------------------------------------------- |
-| OCR not loading                         | `pip install rapidocr-onnxruntime opencv-python-headless onnxruntime` then restart Streamlit |
-| Map empty                               | Install `folium streamlit-folium`; use supported cities or **Live nearby** with GPS/pincode  |
-| `rapidocr` install fails on Python 3.13 | Use `rapidocr-onnxruntime>=1.2.3,<1.3` as in `requirements.txt`                              |
-| Live location denied                    | Allow location in browser; or use pincode instead                                            |
-| No nearby shops                         | OSM data varies by area — try a larger radius or urban pincode                               |
+Possible enhancements:
+- Mobile application
+- AI medicine recommendation
+- Barcode scanning
+- PostgreSQL migration
+- Cloud deployment
+- OTP authentication
+- NGO verification
+- Multi-language OCR
+- Real-time tracking
+- Push notifications
 
+---
 
- 
+# 🔐 Security & Validation
+
+Implemented:
+- Pydantic validation
+- bcrypt password hashing
+- Expiry checks
+- Duplicate donation detection
+- Blocked medicine detection
+- Safe file upload handling
+
+---
+
+# 📊 Workflow
+
+```text
+Donor
+   ↓
+Donation Form
+   ↓
+Validation
+   ↓
+OCR Processing
+   ↓
+NGO Matching
+   ↓
+NGO Accepts
+   ↓
+Pickup Scheduled
+   ↓
+Donation Completed
+```
+
+---
+
+# 🧠 Architecture
+
+The application follows a modular layered architecture:
+
+```text
+UI Layer
+   ↓
+Views
+   ↓
+Services
+   ↓
+Repositories
+   ↓
+SQLite Database
+```
+
+Benefits:
+- Separation of concerns
+- Better maintainability
+- Easier testing
+- Scalable structure
+
+---
+
+# ❓ Troubleshooting
+
+| Issue | Solution |
+|---|---|
+| OCR not loading | Install `rapidocr-onnxruntime opencv-python-headless onnxruntime` |
+| Map not showing | Install `folium streamlit-folium` |
+| Location denied | Enable browser location permissions |
+| No nearby POIs | Increase search radius |
+| OCR install failure on Python 3.13 | Use `rapidocr-onnxruntime>=1.2.3,<1.3` |
+
+---
+
+# 📈 Why This Project Stands Out
+
+- Real-world healthcare impact
+- OCR + Maps + Matching integration
+- Fully open-source & free
+- Practical NGO coordination workflow
+- Analytics dashboard
+- Strong modular architecture
+- Beginner-friendly but scalable design
+
+---
+
+# 👨‍💻 Developed Using
+
+- Python
+- Streamlit
+- SQLite
+- OpenStreetMap
+- RapidOCR
+- Plotly
+- Pydantic
+
+---
+
+# 📜 License
+
+This project is for educational and demonstration purposes.
+
+---
+
+# ❤️ Acknowledgements
+
+Special thanks to:
+- OpenStreetMap
+- RapidOCR
+- Streamlit
+- Open-source Python community
+
+---
+
+# 📬 Contact
+
+For improvements, contributions, or collaboration:
+- Create issues
+- Submit pull requests
+- Fork the repository
+
+---
