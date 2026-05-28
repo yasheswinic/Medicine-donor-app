@@ -235,11 +235,5 @@ Covers validation, matching, DB migration, OCR parsing, geolocation math, and ut
 | Live location denied                    | Allow location in browser; or use pincode instead                                            |
 | No nearby shops                         | OSM data varies by area — try a larger radius or urban pincode                               |
 
----
 
-## License
-
-MIT
-#   M e d i c i n e - d o n o r - a p p  
- #   M e d i c i n e - d o n o r - a p p  
  
