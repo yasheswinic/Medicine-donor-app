@@ -224,62 +224,80 @@ med-donation-app/
 
 ---
 
-# ⚙️ Installation
+# ⚙️ Installation & Setup Guide
 
 ## Requirements
-
 - Python 3.10+
-- Internet connection (for OCR model download & live maps)
+- Internet connection (for live maps & OCR model loading)
 
 ---
 
-## Setup
+## Step-by-Step Terminal Guide
+
+Follow these stepwise instructions to set up, configure, and run the project locally on your system.
+
+### Step 1: Open Terminal & Navigate to the Project Directory
+Open your terminal (PowerShell or Command Prompt on Windows, Terminal on macOS/Linux) and navigate to the project directory:
+
+```powershell
+# Navigate to the workspace folder
+cd "C:\medicine donation\Medicine-donor-app"
+```
+
+### Step 2: Create a Virtual Environment
+Initialize a fresh, isolated Python virtual environment:
 
 ```bash
-git clone <repository-url>
-
-cd med-donation-app
-
 python -m venv venv
 ```
 
-### Windows
+### Step 3: Activate the Virtual Environment
+Activate the environment based on your operating system and shell:
 
-```bash
-venv\Scripts\activate
-```
+- **PowerShell (Windows)**:
+  ```powershell
+  .\venv\Scripts\Activate.ps1
+  ```
+  *(Note: If you encounter an execution policy error on PowerShell, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process` first)*
 
-### macOS/Linux
+- **Command Prompt (Windows CMD)**:
+  ```cmd
+  .\venv\Scripts\activate.bat
+  ```
 
-```bash
-source venv/bin/activate
-```
+- **Bash/Zsh (macOS & Linux)**:
+  ```bash
+  source venv/bin/activate
+  ```
 
-Install dependencies:
+### Step 4: Install Dependencies
+Install all the required Python packages:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create environment file:
+### Step 5: Configure the Environment Variables
+Create your local `.env` configuration file by copying the template file:
 
-### Windows
+- **Windows (PowerShell or CMD)**:
+  ```powershell
+  copy .env.example .env
+  ```
+
+- **macOS / Linux**:
+  ```bash
+  cp .env.example .env
+  ```
+
+### Step 6: Start the MedDonate Web Application
+Launch the main Streamlit application:
 
 ```bash
-copy .env.example .env
+python -m streamlit run app/main.py
 ```
 
-### macOS/Linux
-
-```bash
-cp .env.example .env
-```
-
-Run application:
-
-```bash
-streamlit run app/main.py
-```
+Open the URL shown in your terminal (usually `http://localhost:8501`) in your web browser.
 
 ---
 
